@@ -16,7 +16,10 @@ RUN wget https://www.openssl.org/source/old/1.0.2/openssl-1.0.2u.tar.gz && \
 # Python 3.2.6 をビルド
 WORKDIR /tmp
 RUN wget https://www.python.org/ftp/python/3.2.6/Python-3.2.6.tgz && \
-    tar xzf Python-3.2.6.tgz && cd Python-3.2.6 && \
+    tar xzf Python-3.2.6.tgz && \
+    cd Python-3.2.6 && \
+    # ★ ここで _ctypes を無効化（configure_ctypes が常に False を返すようパッチ）
+    sed -i 's/def configure_ctypes(self, ext):/def configure_ctypes(self, ext):\n        return False\n        #/' setup.py && \
     ./configure --prefix=/opt/python-3.2.6 \
       CPPFLAGS="-I/opt/openssl-1.0.2/include" \
       LDFLAGS="-L/opt/openssl-1.0.2/lib" \
