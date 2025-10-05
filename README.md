@@ -21,6 +21,14 @@ docker build -t py326:local .
 
 # 実行（カレントディレクトリを /work としてマウント）
 docker run --rm -v "$PWD":/work -w /work py326:local python3.2 sample.py
+
+# pkgutil_sample実行方法
+docker run --rm \
+  -e PYTHONIOENCODING=UTF-8 \
+  -e LANG=C.UTF-8 \
+  -e LC_ALL=C.UTF-8 \
+  -v "$PWD":/work -w /work \
+  py326:local python3.2 pkgutil_sample/pkgutil_sample.py
 ```
 
 ### Python 3.3.0
